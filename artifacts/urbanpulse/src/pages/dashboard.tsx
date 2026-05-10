@@ -17,12 +17,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const TRANSPORT_COLORS: Record<string, string> = {
-  subway: '#3B82F6',
-  bus: '#F97316',
-  bicycle: '#22C55E',
-  walking: '#14B8A6',
-  rideshare: '#A855F7',
-  'e-scooter': '#EC4899'
+  subway: '#D4A017',
+  bus: '#E8B86D',
+  bicycle: '#C97C5D',
+  walking: '#B5874A',
+  rideshare: '#E8C99A',
+  'e-scooter': '#F2A6A6'
 };
 
 export default function Dashboard() {
