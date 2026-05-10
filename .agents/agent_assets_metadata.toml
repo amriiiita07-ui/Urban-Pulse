@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "ZWAKp9qa4H2U2gOFEZbuU"
+uri = "file://artifacts/urbanpulse/public/logo.png"
+type = "image"
+title = "urbanpulse city pulse logo icon"
