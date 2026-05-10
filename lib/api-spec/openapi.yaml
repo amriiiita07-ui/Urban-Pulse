@@ -3,13 +3,31 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: UrbanPulse - City Mobility & Urban Experience Intelligence Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: dashboard
+    description: Dashboard summary and KPIs
+  - name: zones
+    description: Urban zones and geographic areas
+  - name: mobility
+    description: Mobility events and transport patterns
+  - name: cohorts
+    description: Citizen behavioral cohorts
+  - name: experience
+    description: Experience scores and sentiment
+  - name: infrastructure
+    description: Infrastructure reports and city issues
+  - name: cityevents
+    description: City events affecting urban mobility
+  - name: weather
+    description: Weather data and impact on mobility
+  - name: anomalies
+    description: Anomaly and fraud detection
 paths:
   /healthz:
     get:
@@ -24,6 +42,307 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard KPI summary
+      description: Returns high-level KPIs for the platform overview
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/mobility-trends:
+    get:
+      operationId: getMobilityTrends
+      tags: [dashboard]
+      summary: Get hourly mobility trends for the last 7 days
+      responses:
+        "200":
+          description: Mobility trend data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MobilityTrendPoint"
+
+  /dashboard/top-zones:
+    get:
+      operationId: getTopZones
+      tags: [dashboard]
+      summary: Get top zones by activity and experience score
+      responses:
+        "200":
+          description: Top zones ranked
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZoneRanking"
+
+  /dashboard/transport-split:
+    get:
+      operationId: getTransportSplit
+      tags: [dashboard]
+      summary: Get modal split breakdown by transport mode
+      responses:
+        "200":
+          description: Transport mode breakdown
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TransportSplit"
+
+  /dashboard/anomalies-summary:
+    get:
+      operationId: getAnomaliesSummary
+      tags: [dashboard]
+      summary: Get anomaly alerts overview
+      responses:
+        "200":
+          description: Anomaly summary
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AnomalyAlert"
+
+  /zones:
+    get:
+      operationId: listZones
+      tags: [zones]
+      summary: List all urban zones
+      responses:
+        "200":
+          description: List of zones
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Zone"
+
+  /zones/{id}:
+    get:
+      operationId: getZone
+      tags: [zones]
+      summary: Get zone details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Zone details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Zone"
+        "404":
+          description: Zone not found
+
+  /zones/heatmap:
+    get:
+      operationId: getZoneHeatmap
+      tags: [zones]
+      summary: Get heatmap data for all zones
+      responses:
+        "200":
+          description: Heatmap intensity per zone
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZoneHeatmapPoint"
+
+  /mobility-events:
+    get:
+      operationId: listMobilityEvents
+      tags: [mobility]
+      summary: List recent mobility events
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+        - name: zoneId
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: List of mobility events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MobilityEvent"
+
+  /mobility-events/crowding-forecast:
+    get:
+      operationId: getCrowdingForecast
+      tags: [mobility]
+      summary: Get crowding forecast by zone and hour
+      responses:
+        "200":
+          description: Crowding forecast data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CrowdingForecast"
+
+  /cohorts:
+    get:
+      operationId: listCohorts
+      tags: [cohorts]
+      summary: List all citizen behavioral cohorts
+      responses:
+        "200":
+          description: List of cohorts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cohort"
+
+  /cohorts/analysis:
+    get:
+      operationId: getCohortAnalysis
+      tags: [cohorts]
+      summary: Get cohort behavioral analysis with metrics
+      responses:
+        "200":
+          description: Cohort analysis data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CohortAnalysis"
+
+  /experience-scores:
+    get:
+      operationId: listExperienceScores
+      tags: [experience]
+      summary: Get experience scores with zone breakdown
+      responses:
+        "200":
+          description: Experience scores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExperienceScore"
+
+  /experience-scores/by-zone:
+    get:
+      operationId: getExperienceByZone
+      tags: [experience]
+      summary: Get aggregated experience scores per zone
+      responses:
+        "200":
+          description: Zone experience scores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ZoneExperienceScore"
+
+  /infrastructure-reports:
+    get:
+      operationId: listInfrastructureReports
+      tags: [infrastructure]
+      summary: List infrastructure issue reports
+      responses:
+        "200":
+          description: Infrastructure reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InfrastructureReport"
+
+  /infrastructure-reports/by-type:
+    get:
+      operationId: getInfraReportsByType
+      tags: [infrastructure]
+      summary: Get infrastructure reports grouped by issue type
+      responses:
+        "200":
+          description: Reports grouped by type
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InfraReportGroup"
+
+  /city-events:
+    get:
+      operationId: listCityEvents
+      tags: [cityevents]
+      summary: List upcoming and recent city events
+      responses:
+        "200":
+          description: City events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CityEvent"
+
+  /weather/impact:
+    get:
+      operationId: getWeatherImpact
+      tags: [weather]
+      summary: Get weather conditions and their impact on mobility
+      responses:
+        "200":
+          description: Weather impact data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WeatherImpact"
+
+  /anomalies:
+    get:
+      operationId: listAnomalies
+      tags: [anomalies]
+      summary: Get detected mobility anomalies and risk zones
+      responses:
+        "200":
+          description: Anomaly list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Anomaly"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +353,346 @@ components:
       required:
         - status
 
+    DashboardSummary:
+      type: object
+      required: [totalCitizens, totalZones, mobilityEventsToday, avgExperienceScore, activeInfraIssues, upcomingCityEvents, crowdingAlerts, transportModeSplit]
+      properties:
+        totalCitizens:
+          type: integer
+        totalZones:
+          type: integer
+        mobilityEventsToday:
+          type: integer
+        avgExperienceScore:
+          type: number
+        activeInfraIssues:
+          type: integer
+        upcomingCityEvents:
+          type: integer
+        crowdingAlerts:
+          type: integer
+        transportModeSplit:
+          type: string
+
+    MobilityTrendPoint:
+      type: object
+      required: [date, hour, eventCount, avgDuration, transportMode]
+      properties:
+        date:
+          type: string
+        hour:
+          type: integer
+        eventCount:
+          type: integer
+        avgDuration:
+          type: number
+        transportMode:
+          type: string
+
+    ZoneRanking:
+      type: object
+      required: [zoneId, zoneName, zoneType, district, activityCount, avgExperienceScore, rank]
+      properties:
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        zoneType:
+          type: string
+        district:
+          type: string
+        activityCount:
+          type: integer
+        avgExperienceScore:
+          type: number
+        rank:
+          type: integer
+
+    TransportSplit:
+      type: object
+      required: [transportMode, count, percentage]
+      properties:
+        transportMode:
+          type: string
+        count:
+          type: integer
+        percentage:
+          type: number
+
+    AnomalyAlert:
+      type: object
+      required: [id, zoneName, anomalyType, severity, detectedAt, description]
+      properties:
+        id:
+          type: integer
+        zoneName:
+          type: string
+        anomalyType:
+          type: string
+        severity:
+          type: string
+        detectedAt:
+          type: string
+        description:
+          type: string
+
+    Zone:
+      type: object
+      required: [id, name, zoneType, district, lat, lng, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        zoneType:
+          type: string
+        district:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        populationDensity:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+
+    ZoneHeatmapPoint:
+      type: object
+      required: [zoneId, zoneName, lat, lng, intensity, activityCount]
+      properties:
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        intensity:
+          type: number
+        activityCount:
+          type: integer
+
+    MobilityEvent:
+      type: object
+      required: [id, citizenId, zoneId, zoneName, transportMode, durationMins, crowdingLevel, timestamp]
+      properties:
+        id:
+          type: integer
+        citizenId:
+          type: integer
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        transportMode:
+          type: string
+        durationMins:
+          type: integer
+        crowdingLevel:
+          type: string
+        timestamp:
+          type: string
+
+    CrowdingForecast:
+      type: object
+      required: [zoneId, zoneName, hour, forecastedCrowding, historicalAvg, riskLevel]
+      properties:
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        hour:
+          type: integer
+        forecastedCrowding:
+          type: number
+        historicalAvg:
+          type: number
+        riskLevel:
+          type: string
+
+    Cohort:
+      type: object
+      required: [id, name, behaviorType, avgTripsPerDay, citizenCount, primaryTransport, peakHour]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        behaviorType:
+          type: string
+        avgTripsPerDay:
+          type: number
+        citizenCount:
+          type: integer
+        primaryTransport:
+          type: string
+        peakHour:
+          type: integer
+
+    CohortAnalysis:
+      type: object
+      required: [cohortId, cohortName, behaviorType, avgTripsPerDay, citizenCount, avgExperienceScore, mostVisitedZone, primaryTransport, peakHour, retentionScore]
+      properties:
+        cohortId:
+          type: integer
+        cohortName:
+          type: string
+        behaviorType:
+          type: string
+        avgTripsPerDay:
+          type: number
+        citizenCount:
+          type: integer
+        avgExperienceScore:
+          type: number
+        mostVisitedZone:
+          type: string
+        primaryTransport:
+          type: string
+        peakHour:
+          type: integer
+        retentionScore:
+          type: number
+
+    ExperienceScore:
+      type: object
+      required: [id, citizenId, zoneId, zoneName, score, sentiment, ratedAt]
+      properties:
+        id:
+          type: integer
+        citizenId:
+          type: integer
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        score:
+          type: number
+        sentiment:
+          type: string
+        ratedAt:
+          type: string
+
+    ZoneExperienceScore:
+      type: object
+      required: [zoneId, zoneName, zoneType, avgScore, totalRatings, positiveRatio, trend]
+      properties:
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        zoneType:
+          type: string
+        avgScore:
+          type: number
+        totalRatings:
+          type: integer
+        positiveRatio:
+          type: number
+        trend:
+          type: string
+
+    InfrastructureReport:
+      type: object
+      required: [id, citizenId, zoneId, zoneName, issueType, severity, status, reportedAt]
+      properties:
+        id:
+          type: integer
+        citizenId:
+          type: integer
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        issueType:
+          type: string
+        severity:
+          type: string
+        status:
+          type: string
+        reportedAt:
+          type: string
+
+    InfraReportGroup:
+      type: object
+      required: [issueType, total, open, inProgress, resolved, avgSeverityScore]
+      properties:
+        issueType:
+          type: string
+        total:
+          type: integer
+        open:
+          type: integer
+        inProgress:
+          type: integer
+        resolved:
+          type: integer
+        avgSeverityScore:
+          type: number
+
+    CityEvent:
+      type: object
+      required: [id, zoneId, zoneName, name, eventType, expectedAttendance, startsAt, endsAt, mobilityImpact]
+      properties:
+        id:
+          type: integer
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        name:
+          type: string
+        eventType:
+          type: string
+        expectedAttendance:
+          type: integer
+        startsAt:
+          type: string
+        endsAt:
+          type: string
+        mobilityImpact:
+          type: string
+
+    WeatherImpact:
+      type: object
+      required: [date, condition, avgTemperature, avgHumidity, mobilityCount, avgDuration, dominantTransport]
+      properties:
+        date:
+          type: string
+        condition:
+          type: string
+        avgTemperature:
+          type: number
+        avgHumidity:
+          type: number
+        mobilityCount:
+          type: integer
+        avgDuration:
+          type: number
+        dominantTransport:
+          type: string
+
+    Anomaly:
+      type: object
+      required: [id, zoneId, zoneName, anomalyType, severity, detectedAt, description, riskScore, resolved]
+      properties:
+        id:
+          type: integer
+        zoneId:
+          type: integer
+        zoneName:
+          type: string
+        anomalyType:
+          type: string
+        severity:
+          type: string
+        detectedAt:
+          type: string
+        description:
+          type: string
+        riskScore:
+          type: number
+        resolved:
+          type: boolean

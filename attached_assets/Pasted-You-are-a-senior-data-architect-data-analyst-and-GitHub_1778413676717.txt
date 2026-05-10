@@ -1,0 +1,354 @@
+You are a senior data architect, data analyst, and GitHub portfolio strategist.
+
+I am a data science student aspiring to become a data analyst. I want you to generate a COMPLETE, HIGHLY UNIQUE, MARKET-RELEVANT SQL PROJECT that I can upload to GitHub as a standout portfolio project.
+
+STRICT REQUIREMENTS:
+
+ The project idea must be genuinely uncommon and creative.
+ Avoid generic ideas completely:
+
+   NO ecommerce analysis
+   NO Netflix analysis
+   NO hospital management
+   NO banking system
+   NO library system
+   NO student database
+   NO HR analytics
+   NO simple sales dashboard
+   NO food delivery clones
+   NO social media clone analytics
+ The idea should feel innovative, modern, practical, and industry-level.
+ It should impress recruiters for data analyst/data science internships.
+ It should look like a real business intelligence project.
+ It must heavily showcase advanced SQL skills.
+ The project should feel “wow, I’ve never seen this before.”
+
+I want a project that combines:
+
+ business logic,
+ behavioral analytics,
+ predictive thinking,
+ advanced SQL,
+ and storytelling with data.
+
+PROJECT EXPECTATIONS:
+Create a full project around ONE unique idea.
+
+The response must include EVERYTHING below in clean sections.
+
+SECTION 1 — PROJECT IDEA
+ Project title
+ One-line pitch
+ Why this project is unique
+ Real-world business relevance
+ What problem it solves
+ Why recruiters would like it
+
+SECTION 2 — DATABASE DESIGN
+
+Generate:
+
+ Database schema
+ ER-style explanation
+ All table definitions
+ Primary keys
+ Foreign keys
+ Constraints
+ Normalization logic
+
+The schema must be realistic and advanced.
+
+SECTION 3 — SQL CODE (FULLY COPYABLE)
+
+Generate COMPLETE SQL code for:
+
+ CREATE DATABASE
+ CREATE TABLE
+ INSERT INTO with realistic sample data
+ Relationships
+ Constraints
+ Views
+ Indexes
+ Triggers
+ Stored procedures
+ Window functions
+ CTEs
+ Analytical queries
+ Business KPI queries
+ Ranking queries
+ Cohort analysis
+ Trend analysis
+ Risk analysis
+ Forecast-style logic
+ Fraud/anomaly detection logic if relevant
+
+The SQL should demonstrate:
+
+ joins
+ subqueries
+ nested queries
+ CASE WHEN
+ aggregate functions
+ window functions
+ partitions
+ denserank/rank
+ lead/lag
+ recursive CTEs if useful
+
+Use PostgreSQL syntax unless another DB is significantly better.
+
+SECTION 4 — ANALYTICS STORY
+
+Explain:
+
+ What insights the business gets
+ Which KPIs matter
+ What decisions can be made
+ What patterns are discovered
+ What hidden trends SQL reveals
+
+Make it sound like a real analytics consulting project.
+
+SECTION 5 — GITHUB PORTFOLIO STRUCTURE
+
+Generate:
+
+ Folder structure
+ File names
+ README.md content
+ Tech stack section
+ Features section
+ Resume-worthy bullet points
+ LinkedIn-worthy project description
+ GitHub repo description
+ GitHub topics/tags
+
+SECTION 6 — STEP-BY-STEP GITHUB PUSH GUIDE
+
+Explain step-by-step:
+
+How to create the project folder
+Where to save SQL files
+How to initialize git
+How to create repository on GitHub
+Commands to push code
+How to make the repo look professional
+How to add screenshots
+How to pin repository on GitHub profile
+
+Include all commands copyable.
+
+SECTION 7 — BONUS ADVANCED FEATURES
+
+Suggest:
+
+ Power BI integration ideas
+ Tableau integration ideas
+ Python analytics integration ideas
+ Streamlit dashboard ideas
+ Real dataset APIs if possible
+ Future scalability ideas
+ How to turn this into an internship discussion topic
+
+IMPORTANT OUTPUT RULES
+ Give COMPLETE production-style code.
+ Do NOT give placeholders.
+ Do NOT skip sample data.
+ Do NOT summarize.
+ Make everything directly usable.
+ Make the project highly polished.
+ Make it recruiter-attractive.
+ Make it look like a project built by someone far above student level.
+ Add comments throughout SQL code.
+ Keep code organized and professional.
+ Ensure originality and creativity.
+ The project should feel elite and memorable.
+ The final output should be extremely detailed and long-form.
+
+SECTION 8 — UI/UX + VISUAL DESIGN REQUIREMENTS
+
+The project should NOT look like a basic AI-generated dashboard or generic bootstrap admin panel.
+
+The UI/UX must feel:
+
+ premium,
+ modern,
+ visually memorable,
+ elegant,
+ startup-quality,
+ and portfolio-worthy.
+
+IMPORTANT:
+The design should stand out instantly from typical student projects.
+
+DESIGN REFERENCES
+
+For inspiration, refer to:
+
+ Dribbble
+ Awwwards
+ Stitch Design
+ Behance
+ Modern SaaS analytics dashboards
+ Minimal luxury UI systems
+ Gen Z + modern startup aesthetics
+
+The UI should feel like something from a funded startup rather than a college assignment.
+
+COLOR THEME
+
+Use a modern pastel aesthetic with:
+
+ powder pink,
+ blush tones,
+ soft lavender,
+ muted cream,
+ warm white,
+ glassmorphism accents,
+ subtle gradients,
+ elegant shadows.
+
+Avoid:
+
+ generic dark dashboards,
+ overused blue admin panels,
+ neon cyberpunk themes,
+ generic Tailwind AI-generated layouts.
+
+The interface should feel soft, intelligent, aesthetic, and luxurious.
+
+TYPOGRAPHY REQUIREMENTS
+
+Do NOT use generic fonts like:
+
+ Arial
+ Times New Roman
+ Poppins alone
+ Roboto alone
+ Open Sans alone
+
+Instead suggest and use elegant modern font pairings such as:
+
+ Satoshi
+ Clash Display
+ General Sans
+ Cabinet Grotesk
+ Switzer
+ Neue Montreal
+ Instrument Serif
+ Plus Jakarta Sans
+ Manrope
+ Erode
+ Gambetta
+
+Use combinations that feel:
+
+ editorial,
+ modern,
+ elegant,
+ tech-startup style,
+ visually engaging.
+
+Explain:
+
+ heading font,
+ body font,
+ UI font hierarchy,
+ spacing system,
+ card styling,
+ dashboard layout philosophy.
+
+FRONTEND REQUIREMENTS
+
+If frontend/dashboard is included, use:
+
+ React
+ Next.js
+ Tailwind CSS
+ Framer Motion
+ Shadcn UI
+ Recharts or ECharts
+ Glassmorphism where appropriate
+ Smooth animations
+ Modern hover effects
+ Advanced filtering UX
+ Smart data storytelling sections
+
+The dashboard should include:
+
+ interactive analytics,
+ animated KPI cards,
+ behavioral insights,
+ predictive trend sections,
+ anomaly alerts,
+ heatmaps,
+ cohort visualizations,
+ advanced filtering,
+ elegant transitions.
+
+DATASET REQUIREMENTS
+
+If external datasets are needed:
+
+ Refer to Kaggle datasets,
+ Public APIs,
+ Government open datasets,
+ GitHub datasets,
+ Google Dataset Search,
+ or other internet sources.
+
+Suggest:
+
+ exact datasets,
+ why they fit the project,
+ how to clean them,
+ how to enrich them,
+ and how to structure them into SQL tables.
+
+The dataset itself should also feel unique and not overused.
+
+PROJECT PERSONALITY
+
+The project should feel like:
+“a luxury-grade analytics intelligence platform built by a future top-tier analyst.”
+
+It should combine:
+
+ aesthetics,
+ storytelling,
+ business intelligence,
+ behavioral analysis,
+ predictive insights,
+ and advanced SQL engineering.
+
+The final result should be something:
+
+ recruiters remember,
+ stands out on LinkedIn,
+ looks incredible on GitHub,
+• and becomes a strong internship conversation piece.
+
+Project Title: UrbanPulse — City Mobility & Urban Experience Intelligence PlatformOne-Line Pitch: A behavioral analytics engine that tracks how citizens move through, experience, and interact with urban infrastructure — turning raw city data into actionable intelligence for smart-city planners, transportation authorities, and urban policy makers.Why This Is Unique: No student has ever built a SQL project around urban mobility behavioral analytics. It combines geospatial thinking, behavioral cohorts, anomaly detection, policy impact analysis, and citizen experience scoring — all in one system. It reads like a real product used by a city government or a PropTech/GovTech startup.Real-World Business Relevance: Cities globally are investing billions into smart infrastructure. Companies like Sidewalk Labs, UrbanFootprint, Replica, Coord, and Stonly are building exactly this. Municipal governments need dashboards like this to understand where their citizens go, when they crowd, what breaks, and what delights them.What Problem It Solves:
+
+Cities are blind to real-time behavioral patterns of their citizens
+Transit systems can't predict overcrowding until it's too late
+Urban planners make decisions without behavioral evidence
+Quality-of-life scores are subjective, not data-driven
+Why Recruiters Would Love It:
+
+Nobody else has it — instant conversation starter
+Demonstrates domain creativity, not just technical skill
+Shows business thinking + SQL mastery simultaneously
+Works as a data analyst, data science, or product analytics portfolio piece
+SECTION 2 — DATABASE DESIGNSchema Philosophy: Star schema at its core with behavioral fact tables, dimension tables for geography/time/demographics, and event-sourced audit tables. Fully normalized to 3NF with strategic denormalization for analytics views.Entity Relationships:
+
+citizens → have mobilityevents (trips, check-ins)
+zones → are geographic areas containing poi (points of interest)
+mobilityevents → link citizens to zones via transport modes
+infrastructurereports → citizens report issues at zones
+cityevents → scheduled events that affect zone crowding
+experiencescores → citizens rate zones after visits
+weather_snapshots → hourly weather affecting mobility
+cohorts → behavioral segmentation of citizens
+
+let's work further on it as a team,
