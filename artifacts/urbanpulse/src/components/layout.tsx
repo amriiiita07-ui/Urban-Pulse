@@ -40,7 +40,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="p-6">
         <div className="flex flex-col gap-1">
-          <h1 className="text-2xl font-bold text-primary font-sans">
+          <h1 className="text-2xl font-bold font-sans" style={{ color: '#C2185B' }}>
             UrbanPulse
           </h1>
           <p className="text-xs text-muted-foreground font-medium">
