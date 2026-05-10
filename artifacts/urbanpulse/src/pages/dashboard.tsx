@@ -9,8 +9,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { Users, Map, Navigation, Star, AlertTriangle, ShieldAlert } from "lucide-react";
-import { 
+import { Users, Map, Navigation, Star, AlertTriangle, ShieldAlert, TrendingUp, Clock } from "lucide-react";
+import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell
 } from "recharts";
@@ -25,6 +25,15 @@ const TRANSPORT_COLORS: Record<string, string> = {
   'e-scooter': '#F2A6A6'
 };
 
+const KPI_CONFIG = [
+  { key: "totalCitizens", title: "Total Citizens", icon: Users, gradient: "from-rose-100 to-pink-50", iconBg: "bg-rose-100", iconColor: "text-rose-500" },
+  { key: "totalZones", title: "Active Zones", icon: Map, gradient: "from-amber-100 to-yellow-50", iconBg: "bg-amber-100", iconColor: "text-amber-500" },
+  { key: "mobilityEventsToday", title: "Mobility Events Today", icon: Navigation, gradient: "from-pink-100 to-rose-50", iconBg: "bg-pink-100", iconColor: "text-pink-500" },
+  { key: "avgExperienceScore", title: "Avg Experience Score", icon: Star, gradient: "from-amber-100 to-orange-50", iconBg: "bg-amber-100", iconColor: "text-amber-500" },
+  { key: "activeInfraIssues", title: "Active Infra Issues", icon: AlertTriangle, gradient: "from-red-100 to-pink-50", iconBg: "bg-red-100", iconColor: "text-red-400" },
+  { key: "crowdingAlerts", title: "Crowding Alerts", icon: ShieldAlert, gradient: "from-orange-100 to-amber-50", iconBg: "bg-orange-100", iconColor: "text-orange-400" },
+];
+
 export default function Dashboard() {
   const { data: summary, isLoading: loadingSummary } = useGetDashboardSummary();
   const { data: trends, isLoading: loadingTrends } = useGetMobilityTrends();
@@ -32,79 +41,116 @@ export default function Dashboard() {
   const { data: transportSplit, isLoading: loadingSplit } = useGetTransportSplit();
   const { data: anomalies, isLoading: loadingAnomalies } = useGetAnomaliesSummary();
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+  const now = new Date();
+  const dateStr = now.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+  const getKpiValue = (key: string) => {
+    if (!summary) return "—";
+    const v = (summary as any)[key];
+    if (key === "avgExperienceScore") return Number(v).toFixed(1);
+    return Number(v).toLocaleString();
   };
 
   return (
     <Layout>
       <div className="space-y-8">
-        <header>
-          <h1 className="text-3xl font-bold font-sans text-foreground">City Intelligence</h1>
-          <p className="text-muted-foreground mt-1">Real-time mobility and experience analytics.</p>
-        </header>
 
-        <motion.div 
-          className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
+        {/* Hero Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative rounded-2xl overflow-hidden h-52 shadow-lg"
         >
-          {loadingSummary ? (
-            Array(6).fill(0).map((_, i) => (
-              <Card key={i} className="bg-white/50 backdrop-blur border-white/20">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <Skeleton className="h-4 w-1/3" />
-                  <Skeleton className="h-4 w-4" />
-                </CardHeader>
-                <CardContent>
-                  <Skeleton className="h-8 w-1/2" />
-                </CardContent>
-              </Card>
-            ))
-          ) : summary ? (
-            <>
-              <KpiCard title="Total Citizens" value={summary.totalCitizens.toLocaleString()} icon={Users} testId="kpi-citizens" />
-              <KpiCard title="Active Zones" value={summary.totalZones.toLocaleString()} icon={Map} testId="kpi-zones" />
-              <KpiCard title="Mobility Events Today" value={summary.mobilityEventsToday.toLocaleString()} icon={Navigation} testId="kpi-mobility" />
-              <KpiCard title="Avg Experience Score" value={summary.avgExperienceScore.toFixed(1)} icon={Star} testId="kpi-experience" />
-              <KpiCard title="Active Infra Issues" value={summary.activeInfraIssues.toString()} icon={AlertTriangle} testId="kpi-infra" />
-              <KpiCard title="Crowding Alerts" value={summary.crowdingAlerts.toString()} icon={ShieldAlert} testId="kpi-crowding" />
-            </>
-          ) : null}
+          <img
+            src="/city-hero.png"
+            alt="City aerial"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#C2185B]/75 via-[#C2185B]/40 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-8">
+            <p className="text-white/70 text-xs font-medium uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <Clock className="w-3 h-3" /> {dateStr}
+            </p>
+            <h1 className="text-4xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              City Intelligence
+            </h1>
+            <p className="text-white/80 text-sm mt-1">Real-time mobility and urban experience analytics</p>
+            <div className="flex gap-4 mt-4">
+              <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-white/30">
+                {summary?.totalZones ?? "—"} Active Zones
+              </span>
+              <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-white/30 flex items-center gap-1">
+                <TrendingUp className="w-3 h-3" /> Live Data
+              </span>
+              <span className="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full border border-white/30">
+                {summary?.crowdingAlerts ?? "—"} Alerts Active
+              </span>
+            </div>
+          </div>
         </motion.div>
 
+        {/* KPI Cards */}
+        <motion.div
+          className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          animate="show"
+          variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
+        >
+          {loadingSummary
+            ? Array(6).fill(0).map((_, i) => (
+                <Card key={i} className="border-white/40">
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <Skeleton className="h-4 w-1/3" />
+                    <Skeleton className="h-8 w-8 rounded-lg" />
+                  </CardHeader>
+                  <CardContent><Skeleton className="h-8 w-1/2" /></CardContent>
+                </Card>
+              ))
+            : KPI_CONFIG.map(({ key, title, icon: Icon, gradient, iconBg, iconColor }) => (
+                <motion.div key={key} variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}>
+                  <Card className={`bg-gradient-to-br ${gradient} border-white/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5`}>
+                    <CardHeader className="flex flex-row items-center justify-between pb-3">
+                      <p className="text-sm font-medium text-muted-foreground">{title}</p>
+                      <div className={`${iconBg} p-2 rounded-xl`}>
+                        <Icon className={`h-4 w-4 ${iconColor}`} />
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-3xl font-bold" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+                        {getKpiValue(key)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+        </motion.div>
+
+        {/* Charts Row */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4 bg-white/60 backdrop-blur border-white/40 shadow-sm">
+          <Card className="col-span-4 bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>Mobility Trends</CardTitle>
               <CardDescription>Hourly mobility events across all transport modes</CardDescription>
             </CardHeader>
             <CardContent className="pl-2">
               {loadingTrends ? (
-                <Skeleton className="w-full h-[300px]" />
+                <Skeleton className="w-full h-[280px]" />
               ) : (
-                <div className="h-[300px] w-full">
+                <div className="h-[280px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={trends}>
                       <defs>
                         <linearGradient id="colorEvent" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                          <stop offset="5%" stopColor="#C2185B" stopOpacity={0.25} />
+                          <stop offset="95%" stopColor="#C2185B" stopOpacity={0} />
                         </linearGradient>
                       </defs>
-                      <XAxis dataKey="hour" stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${value}:00`} />
-                      <YAxis stroke="#888888" fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `${value}`} />
+                      <XAxis dataKey="hour" stroke="#888888" fontSize={11} tickLine={false} axisLine={false} tickFormatter={(v) => `${v}:00`} />
+                      <YAxis stroke="#888888" fontSize={11} tickLine={false} axisLine={false} />
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
-                        labelStyle={{ color: 'hsl(var(--foreground))', fontWeight: 'bold' }}
-                      />
-                      <Area type="monotone" dataKey="eventCount" stroke="hsl(var(--primary))" fillOpacity={1} fill="url(#colorEvent)" />
+                      <Tooltip contentStyle={{ backgroundColor: 'white', borderRadius: '10px', border: '1px solid hsl(var(--border))', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }} labelStyle={{ fontWeight: 'bold' }} />
+                      <Area type="monotone" dataKey="eventCount" stroke="#C2185B" strokeWidth={2} fillOpacity={1} fill="url(#colorEvent)" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -112,74 +158,68 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="col-span-3 bg-white/60 backdrop-blur border-white/40 shadow-sm">
+          <Card className="col-span-3 bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>Transport Split</CardTitle>
-              <CardDescription>Distribution of trips by transport mode</CardDescription>
+              <CardDescription>Distribution of trips by mode</CardDescription>
             </CardHeader>
             <CardContent>
               {loadingSplit ? (
-                <Skeleton className="w-full h-[300px]" />
+                <Skeleton className="w-full h-[280px]" />
               ) : (
-                <div className="h-[300px] w-full flex items-center justify-center">
-                  <ResponsiveContainer width="100%" height="100%">
+                <div className="h-[280px] w-full flex flex-col items-center justify-center gap-3">
+                  <ResponsiveContainer width="100%" height={180}>
                     <PieChart>
-                      <Pie
-                        data={transportSplit}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={90}
-                        paddingAngle={5}
-                        dataKey="count"
-                      >
+                      <Pie data={transportSplit} cx="50%" cy="50%" innerRadius={50} outerRadius={78} paddingAngle={4} dataKey="count">
                         {transportSplit?.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={TRANSPORT_COLORS[entry.transportMode] || 'hsl(var(--primary))'} />
+                          <Cell key={`cell-${index}`} fill={TRANSPORT_COLORS[entry.transportMode] || '#D4A017'} />
                         ))}
                       </Pie>
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: 'hsl(var(--card))', borderRadius: '8px', border: '1px solid hsl(var(--border))' }}
-                        itemStyle={{ color: 'hsl(var(--foreground))' }}
-                        formatter={(value: number, name: string, props: any) => [`${value} trips`, props.payload.transportMode]}
-                      />
+                      <Tooltip contentStyle={{ backgroundColor: 'white', borderRadius: '10px', border: '1px solid hsl(var(--border))' }} formatter={(value: number, name: string, props: any) => [`${value} trips`, props.payload.transportMode]} />
                     </PieChart>
                   </ResponsiveContainer>
+                  <div className="flex flex-wrap justify-center gap-2 px-2">
+                    {transportSplit?.map((entry) => (
+                      <span key={entry.transportMode} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: TRANSPORT_COLORS[entry.transportMode] || '#D4A017' }} />
+                        {entry.transportMode}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
             </CardContent>
           </Card>
         </div>
 
+        {/* Bottom Row */}
         <div className="grid gap-4 md:grid-cols-2">
-          <Card className="bg-white/60 backdrop-blur border-white/40 shadow-sm">
+          {/* Top Zones */}
+          <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>Top Zones</CardTitle>
               <CardDescription>Highest activity districts</CardDescription>
             </CardHeader>
             <CardContent>
               {loadingZones ? (
-                <div className="space-y-4">
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                  <Skeleton className="h-12 w-full" />
-                </div>
+                <div className="space-y-3">{Array(5).fill(0).map((_, i) => <Skeleton key={i} className="h-12 w-full" />)}</div>
               ) : (
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {topZones?.map((zone) => (
-                    <div key={zone.zoneId} className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                    <div key={zone.zoneId} className="flex items-center justify-between p-3 rounded-xl hover:bg-muted/40 transition-colors group">
                       <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm">
+                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-[#C2185B]/20 to-[#C2185B]/10 text-[#C2185B] font-bold text-sm group-hover:from-[#C2185B]/30 transition-colors">
                           {zone.rank}
                         </div>
                         <div>
-                          <p className="text-sm font-medium">{zone.zoneName}</p>
+                          <p className="text-sm font-semibold leading-tight">{zone.zoneName}</p>
                           <p className="text-xs text-muted-foreground">{zone.district}</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm font-bold">{zone.activityCount.toLocaleString()} trips</div>
-                        <div className="text-xs text-muted-foreground flex items-center justify-end gap-1">
-                          <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                        <div className="text-sm font-bold" style={{ fontFamily: "'DM Sans', sans-serif" }}>{zone.activityCount.toLocaleString()} trips</div>
+                        <div className="text-xs text-amber-500 flex items-center justify-end gap-0.5">
+                          <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                           {zone.avgExperienceScore.toFixed(1)}
                         </div>
                       </div>
@@ -190,37 +230,45 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/60 backdrop-blur border-white/40 shadow-sm">
+          {/* Anomalies */}
+          <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>Recent Anomalies</CardTitle>
               <CardDescription>Latest alerts and unusual activities</CardDescription>
             </CardHeader>
             <CardContent>
               {loadingAnomalies ? (
-                <div className="space-y-4">
-                  <Skeleton className="h-16 w-full" />
-                  <Skeleton className="h-16 w-full" />
-                  <Skeleton className="h-16 w-full" />
-                </div>
+                <div className="space-y-3">{Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-16 w-full" />)}</div>
               ) : (
-                <div className="space-y-4">
-                  {anomalies?.slice(0, 5).map((anomaly) => (
-                    <div key={anomaly.id} className="flex flex-col p-3 rounded-lg border bg-card/50 gap-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <ShieldAlert className="w-4 h-4 text-destructive" />
-                          <span className="text-sm font-medium">{anomaly.zoneName}</span>
+                <div className="space-y-3">
+                  {anomalies?.slice(0, 5).map((anomaly) => {
+                    const severityMap: Record<string, string> = {
+                      critical: 'bg-red-50 border-red-200',
+                      high: 'bg-orange-50 border-orange-200',
+                      medium: 'bg-amber-50 border-amber-200',
+                      low: 'bg-pink-50 border-pink-200',
+                    };
+                    const badgeMap: Record<string, string> = {
+                      critical: 'bg-red-100 text-red-700',
+                      high: 'bg-orange-100 text-orange-700',
+                      medium: 'bg-amber-100 text-amber-700',
+                      low: 'bg-pink-100 text-pink-600',
+                    };
+                    return (
+                      <div key={anomaly.id} className={`flex flex-col p-3 rounded-xl border ${severityMap[anomaly.severity] || 'bg-muted/30 border-border'} gap-1.5`}>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <ShieldAlert className="w-4 h-4 text-rose-500" />
+                            <span className="text-sm font-semibold">{anomaly.zoneName}</span>
+                          </div>
+                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${badgeMap[anomaly.severity] || 'bg-muted text-muted-foreground'}`}>
+                            {anomaly.severity}
+                          </span>
                         </div>
-                        <Badge variant={anomaly.severity === 'critical' ? 'destructive' : 'secondary'} className="text-[10px]">
-                          {anomaly.severity}
-                        </Badge>
+                        <p className="text-xs text-muted-foreground line-clamp-1 pl-6">{anomaly.description}</p>
                       </div>
-                      <p className="text-xs text-muted-foreground line-clamp-1">{anomaly.description}</p>
-                    </div>
-                  ))}
-                  {anomalies?.length === 0 && (
-                    <div className="text-sm text-muted-foreground text-center py-4">No recent anomalies detected.</div>
-                  )}
+                    );
+                  })}
                 </div>
               )}
             </CardContent>
@@ -228,21 +276,5 @@ export default function Dashboard() {
         </div>
       </div>
     </Layout>
-  );
-}
-
-function KpiCard({ title, value, icon: Icon, testId }: { title: string, value: string | number, icon: any, testId?: string }) {
-  return (
-    <motion.div variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}>
-      <Card className="bg-white/60 backdrop-blur-md border-white/40 shadow-sm hover:shadow-md transition-all duration-300" data-testid={testId}>
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-          <Icon className="h-4 w-4 text-primary" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold" style={{ fontFamily: "'DM Sans', sans-serif" }}>{value}</div>
-        </CardContent>
-      </Card>
-    </motion.div>
   );
 }

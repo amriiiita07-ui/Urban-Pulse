@@ -6,3 +6,27 @@ id = "ZWAKp9qa4H2U2gOFEZbuU"
 uri = "file://artifacts/urbanpulse/public/logo.png"
 type = "image"
 title = "urbanpulse city pulse logo icon"
+
+[[generated]]
+id = "lnXtJuHg30f-96L5AuVmI"
+uri = "file://artifacts/urbanpulse/public/city-hero.png"
+type = "image"
+title = "city aerial golden hour hero"
+
+[[generated]]
+id = "zWuOJIinwotBJ_XKt9XIe"
+uri = "file://artifacts/urbanpulse/public/zone-transit.png"
+type = "image"
+title = "city transit zone aerial"
+
+[[generated]]
+id = "EVy322EgMCY2evu5T-3fs"
+uri = "file://artifacts/urbanpulse/public/zone-park.png"
+type = "image"
+title = "urban park riverside aerial"
+
+[[generated]]
+id = "tLPMX9H4YFFVwxcPr83Qc"
+uri = "file://artifacts/urbanpulse/public/zone-tech.png"
+type = "image"
+title = "tech commercial district aerial"
