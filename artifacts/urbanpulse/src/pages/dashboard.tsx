@@ -240,7 +240,7 @@ function KpiCard({ title, value, icon: Icon, testId }: { title: string, value: s
           <Icon className="h-4 w-4 text-primary" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold font-sans">{value}</div>
+          <div className="text-2xl font-bold" style={{ fontFamily: "'DM Sans', sans-serif" }}>{value}</div>
         </CardContent>
       </Card>
     </motion.div>

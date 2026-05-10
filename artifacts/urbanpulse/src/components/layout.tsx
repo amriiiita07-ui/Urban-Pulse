@@ -40,7 +40,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="p-5">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="UrbanPulse" className="w-10 h-10 object-contain flex-shrink-0" />
+          <img src="/logo.png" alt="UrbanPulse" className="w-14 h-14 object-contain flex-shrink-0" />
           <div className="flex flex-col gap-0.5">
             <h1 className="text-xl font-bold font-sans leading-tight" style={{ color: '#C2185B' }}>
               UrbanPulse
