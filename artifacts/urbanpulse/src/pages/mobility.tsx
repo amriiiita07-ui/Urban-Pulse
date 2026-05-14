@@ -3,17 +3,17 @@ import { useListMobilityEvents, useGetCrowdingForecast } from "@workspace/api-cl
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { Clock, MapPin, Activity } from "lucide-react";
+import { Clock, MapPin, Activity, Navigation } from "lucide-react";
 import { format } from "date-fns";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const TRANSPORT_PILL: Record<string, string> = {
-  subway:     "bg-blue-100 text-blue-700",
-  bus:        "bg-orange-100 text-orange-700",
-  bicycle:    "bg-green-100 text-green-700",
-  walking:    "bg-teal-100 text-teal-700",
-  rideshare:  "bg-purple-100 text-purple-700",
-  "e-scooter":"bg-pink-100 text-pink-700",
+  subway:      "bg-blue-100 text-blue-700",
+  bus:         "bg-orange-100 text-orange-700",
+  bicycle:     "bg-green-100 text-green-700",
+  walking:     "bg-teal-100 text-teal-700",
+  rideshare:   "bg-purple-100 text-purple-700",
+  "e-scooter": "bg-pink-100 text-pink-700",
 };
 
 const CROWDING_PILL: Record<string, string> = {
@@ -40,21 +40,36 @@ export default function Mobility() {
   return (
     <Layout>
       <div className="space-y-8">
-        <header>
-          <h1 className="text-3xl font-bold font-sans">Mobility Feed</h1>
-          <p className="text-muted-foreground mt-1">Real-time transport events and crowding forecasts.</p>
-        </header>
+        {/* Elegant image header */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+          className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
+        >
+          <img src="/zone-transit.png" alt="Mobility" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/65 via-blue-800/40 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-6">
+            <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <Navigation className="w-3 h-3" /> Transport Intelligence
+            </p>
+            <h1 className="text-3xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Mobility Feed
+            </h1>
+            <p className="text-white/70 text-xs mt-0.5">Real-time transport events and crowding forecasts</p>
+          </div>
+        </motion.div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {/* Forecast Chart */}
+          {/* Forecast chart */}
           <Card className="lg:col-span-2 bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>City-Wide Crowding Forecast</CardTitle>
               <CardDescription>Predicted vs historical crowding levels by hour</CardDescription>
             </CardHeader>
             <CardContent>
-              {loadingForecast ? <Skeleton className="w-full h-[300px]" /> : (
-                <div className="h-[300px]">
+              {loadingForecast ? <Skeleton className="w-full h-[280px]" /> : (
+                <div className="h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={hourlyForecast}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -71,13 +86,13 @@ export default function Mobility() {
             </CardContent>
           </Card>
 
-          {/* Event Feed */}
+          {/* Event feed */}
           <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm flex flex-col">
             <CardHeader>
               <CardTitle>Live Events</CardTitle>
               <CardDescription>Latest mobility interactions</CardDescription>
             </CardHeader>
-            <CardContent className="flex-1 overflow-auto max-h-[360px] space-y-2 pr-1">
+            <CardContent className="flex-1 overflow-auto max-h-[340px] space-y-2 pr-1">
               {loadingEvents ? Array(6).fill(0).map((_, i) => <Skeleton key={i} className="h-16 w-full" />) : (
                 <motion.div
                   className="space-y-2"
@@ -87,8 +102,8 @@ export default function Mobility() {
                   {events?.map((event) => (
                     <motion.div
                       key={event.id}
-                      variants={{ hidden: { x: -12, opacity: 0 }, show: { x: 0, opacity: 1 } }}
-                      className="flex flex-col gap-1.5 p-3 rounded-xl bg-pink-50/60 border border-pink-100 hover:bg-white transition-colors"
+                      variants={{ hidden: { x: -10, opacity: 0 }, show: { x: 0, opacity: 1 } }}
+                      className="flex flex-col gap-1.5 p-3 rounded-xl bg-white border border-border/40 hover:border-pink-200 hover:bg-pink-50/40 transition-all"
                     >
                       <div className="flex items-center justify-between">
                         <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${TRANSPORT_PILL[event.transportMode] ?? "bg-muted text-muted-foreground"}`}>

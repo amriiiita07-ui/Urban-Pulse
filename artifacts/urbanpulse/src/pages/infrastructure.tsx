@@ -22,9 +22,9 @@ const SEVERITY_BADGE: Record<string, string> = {
 };
 
 const STATUS_META: Record<string, { icon: any; color: string; label: string }> = {
-  open:         { icon: AlertTriangle,  color: "text-rose-500",    label: "Open" },
-  "in-progress":{ icon: Hammer,         color: "text-amber-500",   label: "In Progress" },
-  resolved:     { icon: CheckCircle2,   color: "text-emerald-500", label: "Resolved" },
+  open:          { icon: AlertTriangle, color: "text-rose-500",    label: "Open" },
+  "in-progress": { icon: Hammer,        color: "text-amber-500",   label: "In Progress" },
+  resolved:      { icon: CheckCircle2,  color: "text-emerald-500", label: "Resolved" },
 };
 
 export default function Infrastructure() {
@@ -34,10 +34,25 @@ export default function Infrastructure() {
   return (
     <Layout>
       <div className="space-y-8">
-        <header>
-          <h1 className="text-3xl font-bold font-sans">Infrastructure Reports</h1>
-          <p className="text-muted-foreground mt-1">City-wide maintenance and structural issues tracking.</p>
-        </header>
+        {/* Elegant image header */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+          className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
+        >
+          <img src="/zone-transit.png" alt="Infrastructure" className="absolute inset-0 w-full h-full object-cover object-center" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/70 via-slate-800/45 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-6">
+            <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <AlertTriangle className="w-3 h-3" /> City Maintenance
+            </p>
+            <h1 className="text-3xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Infrastructure Reports
+            </h1>
+            <p className="text-white/70 text-xs mt-0.5">City-wide maintenance and structural issue tracking</p>
+          </div>
+        </motion.div>
 
         {/* Stacked bar */}
         <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
@@ -46,8 +61,8 @@ export default function Infrastructure() {
             <CardDescription>Current pipeline of reported infrastructure problems</CardDescription>
           </CardHeader>
           <CardContent>
-            {loadingStats ? <Skeleton className="w-full h-[260px]" /> : (
-              <div className="h-[260px]">
+            {loadingStats ? <Skeleton className="w-full h-[240px]" /> : (
+              <div className="h-[240px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={reportStats} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -55,7 +70,7 @@ export default function Infrastructure() {
                     <YAxis stroke="#bbb" fontSize={11} tickLine={false} axisLine={false} />
                     <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid hsl(var(--border))", boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }} cursor={{ fill: "hsl(var(--muted))", opacity: 0.3 }} />
                     <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 12 }} />
-                    <Bar dataKey="open" name="Open" stackId="a" fill="#f87171" radius={[0, 0, 0, 0]} />
+                    <Bar dataKey="open" name="Open" stackId="a" fill="#f87171" />
                     <Bar dataKey="inProgress" name="In Progress" stackId="a" fill="#D4A017" />
                     <Bar dataKey="resolved" name="Resolved" stackId="a" fill="#34d399" radius={[6, 6, 0, 0]} />
                   </BarChart>
@@ -87,7 +102,7 @@ export default function Infrastructure() {
                     <motion.div
                       key={report.id}
                       variants={{ hidden: { y: 10, opacity: 0 }, show: { y: 0, opacity: 1 } }}
-                      className={`flex flex-col gap-2.5 p-4 rounded-xl border-l-4 bg-white/80 border border-border/40 shadow-sm hover:shadow-md transition-all ${SEVERITY_LEFT[report.severity] ?? "border-l-gray-300"}`}
+                      className={`flex flex-col gap-2.5 p-4 rounded-xl border-l-4 bg-white border border-border/30 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 ${SEVERITY_LEFT[report.severity] ?? "border-l-gray-300"}`}
                     >
                       <div className="flex items-start justify-between">
                         <h4 className="font-semibold text-sm capitalize">{report.issueType.replace("_", " ")}</h4>
@@ -95,7 +110,9 @@ export default function Infrastructure() {
                           {report.severity}
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1"><MapPin className="w-3 h-3 text-[#C2185B]" />{report.zoneName}</p>
+                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#C2185B]" />{report.zoneName}
+                      </p>
                       <div className="flex items-center justify-between pt-2 border-t border-border/30">
                         <span className={`flex items-center gap-1 text-xs font-medium ${status.color}`}>
                           <StatusIcon className="w-3.5 h-3.5" />{status.label}

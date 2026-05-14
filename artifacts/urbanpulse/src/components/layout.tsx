@@ -38,14 +38,14 @@ export function AppSidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="p-5">
+      <SidebarHeader className="px-4 py-5">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="UrbanPulse" className="w-14 h-14 object-contain flex-shrink-0" />
+          <img src="/logo.png" alt="UrbanPulse" className="w-[52px] h-[52px] object-contain flex-shrink-0" />
           <div className="flex flex-col gap-0.5">
-            <h1 className="text-xl font-bold font-sans leading-tight" style={{ color: '#C2185B' }}>
+            <h1 className="text-[22px] font-bold font-sans leading-tight tracking-tight" style={{ color: '#C2185B' }}>
               UrbanPulse
             </h1>
-            <p className="text-[10px] text-muted-foreground font-medium tracking-wide uppercase">
+            <p className="text-[10px] text-muted-foreground font-medium tracking-widest uppercase">
               City Intelligence
             </p>
           </div>

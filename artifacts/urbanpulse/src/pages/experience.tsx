@@ -18,26 +18,43 @@ export default function Experience() {
     acc[curr.sentiment] = (acc[curr.sentiment] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
-  const sentimentData = sentimentCounts ? Object.entries(sentimentCounts).map(([name, value]) => ({ name, value })) : [];
+  const sentimentData = sentimentCounts
+    ? Object.entries(sentimentCounts).map(([name, value]) => ({ name, value }))
+    : [];
 
   return (
     <Layout>
       <div className="space-y-8">
-        <header>
-          <h1 className="text-3xl font-bold font-sans">Experience Monitor</h1>
-          <p className="text-muted-foreground mt-1">Citizen sentiment and zone experience tracking.</p>
-        </header>
+        {/* Elegant image header */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+          className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
+        >
+          <img src="/zone-park.png" alt="Experience" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/65 via-emerald-800/40 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-6">
+            <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <Star className="w-3 h-3" /> Satisfaction Tracking
+            </p>
+            <h1 className="text-3xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Experience Monitor
+            </h1>
+            <p className="text-white/70 text-xs mt-0.5">Citizen sentiment and zone experience tracking</p>
+          </div>
+        </motion.div>
 
+        {/* Charts row */}
         <div className="grid gap-5 lg:grid-cols-3">
-          {/* Bar chart */}
           <Card className="lg:col-span-2 bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>Experience by Zone</CardTitle>
               <CardDescription>Average satisfaction scores across districts</CardDescription>
             </CardHeader>
             <CardContent>
-              {loadingZoneScores ? <Skeleton className="w-full h-[280px]" /> : (
-                <div className="h-[280px]">
+              {loadingZoneScores ? <Skeleton className="w-full h-[260px]" /> : (
+                <div className="h-[260px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={zoneScores?.slice(0, 8)} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -56,7 +73,6 @@ export default function Experience() {
             </CardContent>
           </Card>
 
-          {/* Sentiment donut */}
           <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
             <CardHeader>
               <CardTitle>Sentiment Mix</CardTitle>
@@ -65,13 +81,17 @@ export default function Experience() {
             <CardContent>
               {loadingScores ? <Skeleton className="w-full h-[220px]" /> : (
                 <div className="flex flex-col items-center gap-4">
-                  <div className="h-[180px] w-full">
+                  <div className="h-[170px] w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <PieChart>
-                        <Pie data={sentimentData} cx="50%" cy="50%" innerRadius={52} outerRadius={72} paddingAngle={4} dataKey="value">
-                          {sentimentData.map((entry, i) => <Cell key={i} fill={SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] ?? "#ccc"} />)}
+                        <Pie data={sentimentData} cx="50%" cy="50%" innerRadius={50} outerRadius={68} paddingAngle={4} dataKey="value">
+                          {sentimentData.map((entry, i) => (
+                            <Cell key={i} fill={SENTIMENT_COLORS[entry.name as keyof typeof SENTIMENT_COLORS] ?? "#ccc"} />
+                          ))}
                         </Pie>
-                        <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid hsl(var(--border))" }} formatter={(v: number, n: string) => [`${v} ratings`, n.charAt(0).toUpperCase() + n.slice(1)]} />
+                        <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid hsl(var(--border))" }}
+                          formatter={(v: number, n: string) => [`${v} ratings`, n.charAt(0).toUpperCase() + n.slice(1)]}
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
@@ -90,7 +110,7 @@ export default function Experience() {
           </Card>
         </div>
 
-        {/* Table */}
+        {/* Performance table */}
         <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
           <CardHeader>
             <CardTitle>Zone Performance Matrix</CardTitle>
@@ -116,7 +136,9 @@ export default function Experience() {
                     {zoneScores?.map((zone) => (
                       <TableRow key={zone.zoneId} className="hover:bg-pink-50/30 transition-colors">
                         <TableCell className="font-semibold">{zone.zoneName}</TableCell>
-                        <TableCell><Badge variant="outline" className="text-[10px] bg-primary/5 text-primary border-primary/10">{zone.zoneType}</Badge></TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-[10px] bg-primary/5 text-primary border-primary/10">{zone.zoneType}</Badge>
+                        </TableCell>
                         <TableCell className="text-right">
                           <span className="flex items-center justify-end gap-1 font-bold">
                             {zone.avgScore.toFixed(1)}

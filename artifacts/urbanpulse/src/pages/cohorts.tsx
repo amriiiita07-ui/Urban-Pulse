@@ -26,10 +26,25 @@ export default function Cohorts() {
   return (
     <Layout>
       <div className="space-y-8">
-        <header>
-          <h1 className="text-3xl font-bold font-sans">Cohort Intelligence</h1>
-          <p className="text-muted-foreground mt-1">Behavioral segmentation of citizen mobility patterns.</p>
-        </header>
+        {/* Elegant image header */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+          className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
+        >
+          <img src="/zone-tech.png" alt="Cohorts" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/65 via-purple-800/40 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-6">
+            <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <Users className="w-3 h-3" /> Behavioral Analytics
+            </p>
+            <h1 className="text-3xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              Cohort Intelligence
+            </h1>
+            <p className="text-white/70 text-xs mt-0.5">Behavioral segmentation of citizen mobility patterns</p>
+          </div>
+        </motion.div>
 
         {/* Chart */}
         <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
@@ -38,8 +53,8 @@ export default function Cohorts() {
             <CardDescription>Behavioral comparison across citizen groups</CardDescription>
           </CardHeader>
           <CardContent>
-            {loadingAnalysis ? <Skeleton className="w-full h-[260px]" /> : (
-              <div className="h-[260px]">
+            {loadingAnalysis ? <Skeleton className="w-full h-[240px]" /> : (
+              <div className="h-[240px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={analysis} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
@@ -63,41 +78,60 @@ export default function Cohorts() {
           variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
         >
           {loadingCohorts
-            ? Array(6).fill(0).map((_, i) => <Card key={i} className="border-white/40"><CardContent className="p-4 space-y-3"><Skeleton className="h-5 w-2/3" /><Skeleton className="h-4 w-full" /><Skeleton className="h-8 w-full" /></CardContent></Card>)
+            ? Array(6).fill(0).map((_, i) => (
+                <Card key={i} className="border-white/40">
+                  <CardContent className="p-4 space-y-3">
+                    <Skeleton className="h-5 w-2/3" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-8 w-full" />
+                  </CardContent>
+                </Card>
+              ))
             : cohorts?.map((cohort, idx) => {
                 const aData = analysis?.find(a => a.cohortId === cohort.id);
                 const grad = COHORT_GRADIENTS[idx % COHORT_GRADIENTS.length];
+                const color = BAR_COLORS[idx % BAR_COLORS.length];
                 return (
                   <motion.div key={cohort.id} variants={{ hidden: { y: 16, opacity: 0 }, show: { y: 0, opacity: 1 } }}>
-                    <Card className={`bg-gradient-to-br ${grad} shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 h-full`} data-testid={`cohort-${cohort.id}`}>
+                    <Card
+                      className={`bg-gradient-to-br ${grad} shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 h-full`}
+                      data-testid={`cohort-${cohort.id}`}
+                    >
                       <CardContent className="p-5 space-y-4">
+                        {/* Header */}
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="font-bold text-base leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>{cohort.name}</h3>
-                            <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5"><Users className="w-3 h-3" />{cohort.citizenCount} members</p>
+                            <h3 className="font-bold text-base leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                              {cohort.name}
+                            </h3>
+                            <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
+                              <Users className="w-3 h-3" />{cohort.citizenCount} members
+                            </p>
                           </div>
                           <Badge variant="secondary" className="text-[10px] capitalize">{cohort.behaviorType}</Badge>
                         </div>
 
+                        {/* Stat tiles */}
                         <div className="grid grid-cols-3 gap-2">
                           {[
-                            { icon: Activity, label: "Trips", value: `${cohort.avgTripsPerDay.toFixed(1)}/d` },
-                            { icon: Navigation, label: "Mode", value: cohort.primaryTransport },
-                            { icon: Clock, label: "Peak", value: `${cohort.peakHour}:00` },
+                            { icon: Activity,   label: "Trips",  value: `${cohort.avgTripsPerDay.toFixed(1)}/d` },
+                            { icon: Navigation, label: "Mode",   value: cohort.primaryTransport },
+                            { icon: Clock,      label: "Peak",   value: `${cohort.peakHour}:00` },
                           ].map(({ icon: Icon, label, value }) => (
-                            <div key={label} className="bg-white/60 rounded-lg p-2 text-center">
+                            <div key={label} className="bg-white/70 rounded-xl p-2.5 text-center border border-white/80">
                               <Icon className="w-3 h-3 text-muted-foreground mx-auto mb-0.5" />
                               <p className="text-[9px] text-muted-foreground">{label}</p>
-                              <p className="text-xs font-bold truncate" style={{ fontFamily: "'DM Sans', sans-serif" }}>{value}</p>
+                              <p className="text-[11px] font-bold truncate" style={{ fontFamily: "'DM Sans', sans-serif" }}>{value}</p>
                             </div>
                           ))}
                         </div>
 
+                        {/* Retention bar */}
                         {aData && (
-                          <div className="space-y-1">
+                          <div className="space-y-1.5">
                             <div className="flex justify-between text-xs">
                               <span className="text-muted-foreground">Retention Score</span>
-                              <span className="font-bold" style={{ color: BAR_COLORS[idx % BAR_COLORS.length] }}>{aData.retentionScore}/100</span>
+                              <span className="font-bold" style={{ color }}>{aData.retentionScore}/100</span>
                             </div>
                             <Progress value={aData.retentionScore} className="h-1.5" />
                           </div>

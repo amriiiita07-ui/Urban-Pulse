@@ -49,7 +49,7 @@ export default function CityEvents() {
                 initial="hidden" animate="show"
                 variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.06 } } }}
               >
-                {events?.map((event) => {
+                {[...(events ?? [])].sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()).map((event) => {
                   const impact = IMPACT_STYLES[event.mobilityImpact] ?? IMPACT_STYLES.low;
                   const typePill = TYPE_PILL[event.eventType?.toLowerCase()] ?? "bg-muted text-muted-foreground";
                   return (
