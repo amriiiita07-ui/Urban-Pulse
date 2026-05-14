@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import { Star, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from "recharts";
 
-const SENTIMENT_COLORS = { positive: "#34d399", neutral: "#94a3b8", negative: "#f87171" };
+const SENTIMENT_COLORS = { positive: "#6366F1", neutral: "#94a3b8", negative: "#FB923C" };
 
 export default function Experience() {
   const { data: scores, isLoading: loadingScores } = useListExperienceScores();
@@ -32,8 +32,8 @@ export default function Experience() {
           transition={{ duration: 0.45 }}
           className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
         >
-          <img src="/zone-park.png" alt="Experience" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/65 via-emerald-800/40 to-transparent" />
+          <img src="/zone-transit.png" alt="Experience" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/70 via-violet-800/40 to-transparent" />
           <div className="relative z-10 h-full flex flex-col justify-end p-6">
             <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
               <Star className="w-3 h-3" /> Satisfaction Tracking
@@ -63,7 +63,7 @@ export default function Experience() {
                       <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid hsl(var(--border))", boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }} cursor={{ fill: "hsl(var(--muted))", opacity: 0.3 }} />
                       <Bar dataKey="avgScore" name="Avg Score" radius={[6, 6, 0, 0]}>
                         {zoneScores?.slice(0, 8).map((entry, i) => (
-                          <Cell key={i} fill={entry.avgScore >= 7 ? "#C2185B" : entry.avgScore >= 5 ? "#D4A017" : "#94a3b8"} />
+                          <Cell key={i} fill={entry.avgScore >= 7 ? "#6366F1" : entry.avgScore >= 5 ? "#A78BFA" : "#CBD5E1"} />
                         ))}
                       </Bar>
                     </BarChart>
