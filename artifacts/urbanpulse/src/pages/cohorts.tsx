@@ -9,15 +9,15 @@ import { Users, Activity, Clock, Navigation } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 
 const COHORT_GRADIENTS = [
-  "from-rose-50 to-pink-50 border-rose-100",
-  "from-amber-50 to-yellow-50 border-amber-100",
-  "from-purple-50 to-fuchsia-50 border-purple-100",
-  "from-teal-50 to-emerald-50 border-teal-100",
-  "from-sky-50 to-blue-50 border-sky-100",
-  "from-orange-50 to-red-50 border-orange-100",
+  "from-orange-50 to-amber-50 border-orange-100",
+  "from-teal-50 to-cyan-50 border-teal-100",
+  "from-rose-50 to-red-50 border-rose-100",
+  "from-lime-50 to-green-50 border-lime-100",
+  "from-sky-50 to-indigo-50 border-sky-100",
+  "from-fuchsia-50 to-pink-50 border-fuchsia-100",
 ];
 
-const BAR_COLORS = ["#7C3AED", "#A855F7", "#C084FC", "#8B5CF6", "#6D28D9", "#9333EA"];
+const BAR_COLORS = ["#E8956D", "#2A9D8F", "#E76F51", "#52B788", "#4895EF", "#C77DFF"];
 
 export default function Cohorts() {
   const { data: cohorts, isLoading: loadingCohorts } = useListCohorts();
@@ -26,15 +26,15 @@ export default function Cohorts() {
   return (
     <Layout>
       <div className="space-y-8">
-        {/* Elegant image header */}
+        {/* Banner — warm golden park */}
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
           className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
         >
-          <img src="/zone-tech.png" alt="Cohorts" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-violet-900/60 via-purple-700/35 to-transparent" />
+          <img src="/zone-park.png" alt="Cohorts" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-900/65 via-emerald-800/38 to-transparent" />
           <div className="relative z-10 h-full flex flex-col justify-end p-6">
             <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
               <Users className="w-3 h-3" /> Behavioral Analytics
@@ -60,7 +60,10 @@ export default function Cohorts() {
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                     <XAxis dataKey="cohortName" stroke="#bbb" fontSize={11} tickLine={false} axisLine={false} />
                     <YAxis stroke="#bbb" fontSize={11} tickLine={false} axisLine={false} />
-                    <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid hsl(var(--border))", boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }} cursor={{ fill: "hsl(var(--muted))", opacity: 0.3 }} />
+                    <Tooltip
+                      contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid hsl(var(--border))", boxShadow: "0 4px 20px rgba(0,0,0,0.07)" }}
+                      cursor={{ fill: "hsl(var(--muted))", opacity: 0.3 }}
+                    />
                     <Bar dataKey="avgTripsPerDay" name="Avg Trips/Day" radius={[6, 6, 0, 0]}>
                       {analysis?.map((_, i) => <Cell key={i} fill={BAR_COLORS[i % BAR_COLORS.length]} />)}
                     </Bar>
@@ -98,7 +101,6 @@ export default function Cohorts() {
                       data-testid={`cohort-${cohort.id}`}
                     >
                       <CardContent className="p-5 space-y-4">
-                        {/* Header */}
                         <div className="flex justify-between items-start">
                           <div>
                             <h3 className="font-bold text-base leading-tight" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
@@ -111,12 +113,11 @@ export default function Cohorts() {
                           <Badge variant="secondary" className="text-[10px] capitalize">{cohort.behaviorType}</Badge>
                         </div>
 
-                        {/* Stat tiles */}
                         <div className="grid grid-cols-3 gap-2">
                           {[
-                            { icon: Activity,   label: "Trips",  value: `${cohort.avgTripsPerDay.toFixed(1)}/d` },
-                            { icon: Navigation, label: "Mode",   value: cohort.primaryTransport },
-                            { icon: Clock,      label: "Peak",   value: `${cohort.peakHour}:00` },
+                            { icon: Activity,   label: "Trips", value: `${cohort.avgTripsPerDay.toFixed(1)}/d` },
+                            { icon: Navigation, label: "Mode",  value: cohort.primaryTransport },
+                            { icon: Clock,      label: "Peak",  value: `${cohort.peakHour}:00` },
                           ].map(({ icon: Icon, label, value }) => (
                             <div key={label} className="bg-white/70 rounded-xl p-2.5 text-center border border-white/80">
                               <Icon className="w-3 h-3 text-muted-foreground mx-auto mb-0.5" />
@@ -126,7 +127,6 @@ export default function Cohorts() {
                           ))}
                         </div>
 
-                        {/* Retention bar */}
                         {aData && (
                           <div className="space-y-1.5">
                             <div className="flex justify-between text-xs">

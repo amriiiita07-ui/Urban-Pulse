@@ -67,7 +67,7 @@ export default function Dashboard() {
             alt="City aerial"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/85 via-[#1e3a5f]/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-rose-700/65 via-pink-500/35 to-transparent" />
           <div className="relative z-10 h-full flex flex-col justify-end p-8">
             <p className="text-white/70 text-xs font-medium uppercase tracking-widest mb-1 flex items-center gap-1.5">
               <Clock className="w-3 h-3" /> {dateStr}

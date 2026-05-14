@@ -51,7 +51,7 @@ export default function CityEvents() {
           className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
         >
           <img src="/city-events-hero.png" alt="City Events" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-amber-900/70 via-orange-800/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-700/60 via-cyan-600/32 to-transparent" />
           <div className="relative z-10 h-full flex flex-col justify-end p-6">
             <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
               <Calendar className="w-3 h-3" /> Event Intelligence
