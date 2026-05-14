@@ -3,12 +3,12 @@ import { useListCityEvents } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Users, Navigation, Clock } from "lucide-react";
+import { Calendar, MapPin, Users, Navigation } from "lucide-react";
 import { format } from "date-fns";
 
 const IMPACT_STYLES: Record<string, { pill: string; dot: string }> = {
-  high:   { pill: "bg-rose-100 text-rose-700",     dot: "bg-rose-400" },
-  medium: { pill: "bg-amber-100 text-amber-700",   dot: "bg-amber-400" },
+  high:   { pill: "bg-rose-100 text-rose-700",      dot: "bg-rose-400" },
+  medium: { pill: "bg-amber-100 text-amber-700",    dot: "bg-amber-400" },
   low:    { pill: "bg-emerald-100 text-emerald-700", dot: "bg-emerald-400" },
 };
 
@@ -20,10 +20,25 @@ const TYPE_PILL: Record<string, string> = {
   conference: "bg-slate-100 text-slate-700",
   market:     "bg-amber-100 text-amber-700",
   education:  "bg-indigo-100 text-indigo-700",
+  tour:       "bg-orange-100 text-orange-700",
+};
+
+const EVENT_THUMB: Record<string, string> = {
+  concert:    "/event-concert.png",
+  festival:   "/event-concert.png",
+  sports:     "/event-sports.png",
+  marathon:   "/event-sports.png",
+  market:     "/zone-park.png",
+  tour:       "/zone-transit.png",
+  conference: "/zone-tech.png",
+  education:  "/zone-tech.png",
 };
 
 export default function CityEvents() {
   const { data: events, isLoading } = useListCityEvents();
+  const sorted = [...(events ?? [])].sort(
+    (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+  );
 
   return (
     <Layout>
@@ -40,69 +55,88 @@ export default function CityEvents() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <div className="space-y-4">
-                {Array(5).fill(0).map((_, i) => <Skeleton key={i} className="h-20 w-full" />)}
+              <div className="space-y-3">
+                {Array(5).fill(0).map((_, i) => (
+                  <div key={i} className="flex items-center gap-4 py-3">
+                    <Skeleton className="w-14 h-10 rounded" />
+                    <Skeleton className="w-px h-10" />
+                    <Skeleton className="w-12 h-12 rounded-xl flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <Skeleton className="h-4 w-1/3" />
+                      <Skeleton className="h-3 w-2/3" />
+                    </div>
+                    <Skeleton className="w-16 h-5 rounded-full" />
+                  </div>
+                ))}
               </div>
             ) : (
               <motion.div
-                className="divide-y divide-border/40"
+                className="divide-y divide-border/30"
                 initial="hidden" animate="show"
                 variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.06 } } }}
               >
-                {[...(events ?? [])].sort((a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()).map((event) => {
+                {sorted.map((event) => {
                   const impact = IMPACT_STYLES[event.mobilityImpact] ?? IMPACT_STYLES.low;
                   const typePill = TYPE_PILL[event.eventType?.toLowerCase()] ?? "bg-muted text-muted-foreground";
+                  const thumb = EVENT_THUMB[event.eventType?.toLowerCase()] ?? "/city-events-hero.png";
+
                   return (
                     <motion.div
                       key={event.id}
-                      variants={{ hidden: { x: -12, opacity: 0 }, show: { x: 0, opacity: 1 } }}
-                      className="flex items-center gap-5 py-4 hover:bg-pink-50/30 px-2 rounded-xl transition-colors group"
+                      variants={{ hidden: { x: -10, opacity: 0 }, show: { x: 0, opacity: 1 } }}
+                      className="flex items-center gap-4 py-3.5 px-2 hover:bg-pink-50/40 rounded-xl transition-colors group"
                     >
                       {/* Date block */}
-                      <div className="flex-shrink-0 w-14 text-center">
-                        <p className="text-xs text-muted-foreground uppercase tracking-wide">
+                      <div className="flex-shrink-0 w-12 text-center">
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-wide leading-none">
                           {format(new Date(event.startsAt), "MMM")}
                         </p>
-                        <p className="text-2xl font-bold leading-tight" style={{ fontFamily: "'DM Sans', sans-serif", color: "#C2185B" }}>
+                        <p className="text-[22px] font-bold leading-tight" style={{ fontFamily: "'DM Sans', sans-serif", color: "#C2185B" }}>
                           {format(new Date(event.startsAt), "d")}
                         </p>
-                        <p className="text-[10px] text-muted-foreground">
+                        <p className="text-[9px] text-muted-foreground leading-none">
                           {format(new Date(event.startsAt), "HH:mm")}
                         </p>
                       </div>
 
-                      {/* Divider line */}
-                      <div className="w-px h-12 bg-border/60 flex-shrink-0" />
+                      {/* Vertical rule */}
+                      <div className="w-px h-10 bg-border/50 flex-shrink-0" />
 
-                      {/* Main content */}
+                      {/* Small thumbnail */}
+                      <div className="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border border-white/80 shadow-sm">
+                        <img
+                          src={thumb}
+                          alt={event.eventType}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+
+                      {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize ${typePill}`}>
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full capitalize ${typePill}`}>
                             {event.eventType}
                           </span>
                         </div>
                         <h3 className="font-semibold text-sm leading-tight truncate">{event.name}</h3>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <MapPin className="w-3 h-3 text-[#C2185B]" />{event.zoneName}
+                        <div className="flex items-center gap-3 mt-0.5 text-[11px] text-muted-foreground">
+                          <span className="flex items-center gap-0.5">
+                            <MapPin className="w-2.5 h-2.5 text-[#C2185B]" />{event.zoneName}
                           </span>
-                          <span className="flex items-center gap-1">
-                            <Users className="w-3 h-3" />
+                          <span className="flex items-center gap-0.5">
+                            <Users className="w-2.5 h-2.5" />
                             <span style={{ fontFamily: "'DM Sans', sans-serif" }} className="font-medium text-foreground">
                               {event.expectedAttendance.toLocaleString()}
-                            </span> expected
+                            </span>
                           </span>
                         </div>
                       </div>
 
-                      {/* Impact badge */}
-                      <div className="flex-shrink-0 flex items-center gap-1.5">
-                        <Navigation className="w-3 h-3 text-muted-foreground" />
-                        <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full flex items-center gap-1 ${impact.pill}`}>
-                          <span className={`w-1.5 h-1.5 rounded-full ${impact.dot}`} />
-                          {event.mobilityImpact}
-                        </span>
-                      </div>
+                      {/* Impact pill */}
+                      <span className={`flex-shrink-0 text-[10px] font-semibold px-2.5 py-0.5 rounded-full flex items-center gap-1 ${impact.pill}`}>
+                        <span className={`w-1.5 h-1.5 rounded-full ${impact.dot}`} />
+                        {event.mobilityImpact}
+                      </span>
                     </motion.div>
                   );
                 })}
@@ -111,16 +145,16 @@ export default function CityEvents() {
           </CardContent>
         </Card>
 
-        {/* Summary pills */}
+        {/* Summary row */}
         {!isLoading && events && (
           <motion.div
             className="grid grid-cols-3 gap-4"
-            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           >
             {[
-              { label: "Total Events", value: events.length, icon: Calendar, color: "bg-pink-50 border-pink-100" },
-              { label: "High Impact", value: events.filter(e => e.mobilityImpact === "high").length, icon: Navigation, color: "bg-rose-50 border-rose-100" },
-              { label: "Total Expected", value: events.reduce((s, e) => s + e.expectedAttendance, 0).toLocaleString(), icon: Users, color: "bg-amber-50 border-amber-100" },
+              { label: "Total Events",   value: events.length,                                                        icon: Calendar,   color: "bg-pink-50 border-pink-100" },
+              { label: "High Impact",    value: events.filter(e => e.mobilityImpact === "high").length,               icon: Navigation, color: "bg-rose-50 border-rose-100" },
+              { label: "Total Expected", value: events.reduce((s, e) => s + e.expectedAttendance, 0).toLocaleString(), icon: Users,      color: "bg-amber-50 border-amber-100" },
             ].map(({ label, value, icon: Icon, color }) => (
               <Card key={label} className={`${color} border shadow-sm`}>
                 <CardContent className="p-4 flex items-center gap-3">
