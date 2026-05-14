@@ -43,11 +43,27 @@ export default function CityEvents() {
   return (
     <Layout>
       <div className="space-y-8">
-        <header>
-          <h1 className="text-3xl font-bold font-sans">City Events</h1>
-          <p className="text-muted-foreground mt-1">Scheduled activities and their expected impact on urban mobility.</p>
-        </header>
+        {/* Image banner */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45 }}
+          className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
+        >
+          <img src="/city-events-hero.png" alt="City Events" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-amber-900/70 via-orange-800/45 to-transparent" />
+          <div className="relative z-10 h-full flex flex-col justify-end p-6">
+            <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
+              <Calendar className="w-3 h-3" /> Event Intelligence
+            </p>
+            <h1 className="text-3xl font-bold text-white drop-shadow-sm" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+              City Events
+            </h1>
+            <p className="text-white/70 text-xs mt-0.5">Scheduled activities and their expected impact on urban mobility</p>
+          </div>
+        </motion.div>
 
+        {/* Events list */}
         <Card className="bg-white/70 backdrop-blur border-white/50 shadow-sm">
           <CardHeader>
             <CardTitle>Upcoming Events</CardTitle>
@@ -79,14 +95,12 @@ export default function CityEvents() {
                   const impact = IMPACT_STYLES[event.mobilityImpact] ?? IMPACT_STYLES.low;
                   const typePill = TYPE_PILL[event.eventType?.toLowerCase()] ?? "bg-muted text-muted-foreground";
                   const thumb = EVENT_THUMB[event.eventType?.toLowerCase()] ?? "/city-events-hero.png";
-
                   return (
                     <motion.div
                       key={event.id}
                       variants={{ hidden: { x: -10, opacity: 0 }, show: { x: 0, opacity: 1 } }}
-                      className="flex items-center gap-4 py-3.5 px-2 hover:bg-pink-50/40 rounded-xl transition-colors group"
+                      className="flex items-center gap-4 py-3.5 px-2 hover:bg-amber-50/30 rounded-xl transition-colors group"
                     >
-                      {/* Date block */}
                       <div className="flex-shrink-0 w-12 text-center">
                         <p className="text-[10px] text-muted-foreground uppercase tracking-wide leading-none">
                           {format(new Date(event.startsAt), "MMM")}
@@ -98,11 +112,7 @@ export default function CityEvents() {
                           {format(new Date(event.startsAt), "HH:mm")}
                         </p>
                       </div>
-
-                      {/* Vertical rule */}
                       <div className="w-px h-10 bg-border/50 flex-shrink-0" />
-
-                      {/* Small thumbnail */}
                       <div className="w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border border-white/80 shadow-sm">
                         <img
                           src={thumb}
@@ -110,8 +120,6 @@ export default function CityEvents() {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
-
-                      {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5 mb-0.5">
                           <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full capitalize ${typePill}`}>
@@ -131,8 +139,6 @@ export default function CityEvents() {
                           </span>
                         </div>
                       </div>
-
-                      {/* Impact pill */}
                       <span className={`flex-shrink-0 text-[10px] font-semibold px-2.5 py-0.5 rounded-full flex items-center gap-1 ${impact.pill}`}>
                         <span className={`w-1.5 h-1.5 rounded-full ${impact.dot}`} />
                         {event.mobilityImpact}
@@ -152,9 +158,9 @@ export default function CityEvents() {
             initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           >
             {[
-              { label: "Total Events",   value: events.length,                                                        icon: Calendar,   color: "bg-pink-50 border-pink-100" },
-              { label: "High Impact",    value: events.filter(e => e.mobilityImpact === "high").length,               icon: Navigation, color: "bg-rose-50 border-rose-100" },
-              { label: "Total Expected", value: events.reduce((s, e) => s + e.expectedAttendance, 0).toLocaleString(), icon: Users,      color: "bg-amber-50 border-amber-100" },
+              { label: "Total Events",   value: events.length,                                                         icon: Calendar,   color: "bg-amber-50 border-amber-100" },
+              { label: "High Impact",    value: events.filter(e => e.mobilityImpact === "high").length,                icon: Navigation, color: "bg-rose-50 border-rose-100" },
+              { label: "Total Expected", value: events.reduce((s, e) => s + e.expectedAttendance, 0).toLocaleString(), icon: Users,      color: "bg-orange-50 border-orange-100" },
             ].map(({ label, value, icon: Icon, color }) => (
               <Card key={label} className={`${color} border shadow-sm`}>
                 <CardContent className="p-4 flex items-center gap-3">

@@ -17,7 +17,7 @@ const COHORT_GRADIENTS = [
   "from-orange-50 to-red-50 border-orange-100",
 ];
 
-const BAR_COLORS = ["#C2185B", "#D4A017", "#9C27B0", "#00897B", "#1565C0", "#E64A19"];
+const BAR_COLORS = ["#7C3AED", "#A855F7", "#C084FC", "#8B5CF6", "#6D28D9", "#9333EA"];
 
 export default function Cohorts() {
   const { data: cohorts, isLoading: loadingCohorts } = useListCohorts();
@@ -34,7 +34,7 @@ export default function Cohorts() {
           className="relative rounded-2xl overflow-hidden h-36 shadow-sm"
         >
           <img src="/zone-tech.png" alt="Cohorts" className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/65 via-purple-800/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-violet-900/60 via-purple-700/35 to-transparent" />
           <div className="relative z-10 h-full flex flex-col justify-end p-6">
             <p className="text-white/60 text-[10px] uppercase tracking-widest mb-1 flex items-center gap-1.5">
               <Users className="w-3 h-3" /> Behavioral Analytics
