@@ -11,7 +11,7 @@
 
 
 
-# 🏙️ Urban Pulse
+# Urban Pulse
 
 ### A real-time analytics dashboard that reads a city's vital signs
 ### Traffic · Air Quality · Noise · Energy · Mobility
