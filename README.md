@@ -1,28 +1,43 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Urban+Pulse+Dashboard;Real-Time+City+Intelligence;Where+Data+Meets+the+Street" alt="Typing SVG" />
-
-<br/>
-
-# URBAN PULSE
-### A Real-Time Smart City Analytics Dashboard
-
-> *"Cities generate data every second. Urban Pulse is the instrument that reads the city's heartbeat."*
-
-<br/>
-
-[![Live Demo](https://img.shields.io/badge/LIVE%20DEMO-Click%20Here-00D9FF?style=for-the-badge&logo=replit&logoColor=white)](https://491f162e-4f29-47db-95cf-455a287496c1-00-o98pxtwpipi9.pike.replit.dev/login)
-[![Built on Replit](https://img.shields.io/badge/Built%20on-Replit-F26207?style=for-the-badge&logo=replit&logoColor=white)](https://replit.com)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-amriiiita07--ui-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/amriiiita07-ui/Urban-Pulse)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)]()
-[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-blueviolet?style=for-the-badge)]()
-
-<br/>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00D9FF,100:7B2FBE&height=3&section=header" width="100%"/>
-
+<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;">
+  <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#1D9E75;"></span>
+  <span style="font-size:12px;color:#1D9E75;letter-spacing:0.08em;font-weight:600;">LIVE ON REPLIT</span>
+  <span style="font-size:12px;color:#888;">— 491f162e...pike.replit.dev</span>
 </div>
 
+<sub>amriiiita07-ui / Urban-Pulse</sub>
+
+# Urban Pulse
+
+**A real-time analytics dashboard that reads a city's vital signs —**  
+**traffic, air quality, noise, and energy — in one unified view.**
+
+> *"Cities generate data every second. Urban Pulse is the instrument that reads the heartbeat."*
+
+<br/>
+
+[![Live Demo](https://img.shields.io/badge/▶_Live_Demo-Open_App-1D9E75?style=flat-square&logoColor=white)](https://491f162e-4f29-47db-95cf-455a287496c1-00-o98pxtwpipi9.pike.replit.dev/login)
+[![Built on Replit](https://img.shields.io/badge/Built_on-Replit-F26207?style=flat-square&logo=replit&logoColor=white)](https://replit.com)
+[![GitHub](https://img.shields.io/badge/GitHub-amriiiita07--ui-181717?style=flat-square&logo=github)](https://github.com/amriiiita07-ui/Urban-Pulse)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)]()
+[![License](https://img.shields.io/badge/License-MIT-blueviolet?style=flat-square)]()
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-7F77DD?style=flat-square)]()
+
+<br/>
+
+| 🏙️ Smart City Market | 🌐 IoT Devices Live | 🏘️ Urban Pop. by 2050 | 📊 City Leaders Using IoT |
+|:---:|:---:|:---:|:---:|
+| **$170.67B** (2025) | **27 Billion** | **66%** of humanity | **60%** reshaping ops daily |
+| → $451B by 2034 | 17.9% CAGR (2022–2027) | UN projection | HiveMQ Survey 2025 |
+
+<br/>
+
+`🚦 Traffic Congestion` &nbsp; `💨 Air Quality Index` &nbsp; `🔊 Noise Pollution` &nbsp; `⚡ Energy Load` &nbsp; `🚶 Citizen Mobility`
+
+<br/>
+
+</div>
 ---
 
 ## What Is Urban Pulse?
