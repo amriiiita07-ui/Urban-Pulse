@@ -9,14 +9,7 @@
 
 > *"Cities generate data every second. Urban Pulse is the instrument that reads the city's heartbeat."*
 
-
-
-# Urban Pulse
-
-### A real-time analytics dashboard that reads a city's vital signs
 ### Traffic · Air Quality · Noise · Energy · Mobility
-
-> *"Cities generate data every second. Urban Pulse is the instrument that reads the heartbeat."*
 
 <br/>
 
