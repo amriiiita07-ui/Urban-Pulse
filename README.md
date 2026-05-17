@@ -1,10 +1,15 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=13&duration=2000&pause=1000&color=1D9E75&center=true&vCenter=true&width=500&lines=●+LIVE+ON+REPLIT+—+491f162e...pike.replit.dev" alt="Live status" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=32&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Urban+Pulse+Dashboard;Real-Time+City+Intelligence;Where+Data+Meets+the+Street" alt="Typing SVG" />
 
 <br/>
 
-<sup>amriiiita07-ui / Urban-Pulse</sup>
+# URBAN PULSE
+### A Real-Time Smart City Analytics Dashboard
+
+> *"Cities generate data every second. Urban Pulse is the instrument that reads the city's heartbeat."*
+
+
 
 # 🏙️ Urban Pulse
 
