@@ -44,9 +44,15 @@ router.get("/zones/heatmap", async (req, res) => {
 router.get("/zones/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
-    if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
+    if (isNaN(id)) {
+      res.status(400).json({ error: "Invalid ID" });
+      return;
+    }
     const [zone] = await db.select().from(zonesTable).where(eq(zonesTable.id, id));
-    if (!zone) return res.status(404).json({ error: "Zone not found" });
+    if (!zone) {
+      res.status(404).json({ error: "Zone not found" });
+      return;
+    }
     res.json({ ...zone, lat: Number(zone.lat), lng: Number(zone.lng), createdAt: zone.createdAt.toISOString() });
   } catch (err) {
     req.log.error(err);
