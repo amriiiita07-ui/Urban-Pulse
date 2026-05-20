@@ -1,0 +1,1 @@
+{"version":3,"file":"cohort.d.ts","sourceRoot":"","sources":["../../../src/generated/types/cohort.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,MAAM,WAAW,MAAM;IACrB,EAAE,EAAE,MAAM,CAAC;IACX,IAAI,EAAE,MAAM,CAAC;IACb,YAAY,EAAE,MAAM,CAAC;IACrB,cAAc,EAAE,MAAM,CAAC;IACvB,YAAY,EAAE,MAAM,CAAC;IACrB,gBAAgB,EAAE,MAAM,CAAC;IACzB,QAAQ,EAAE,MAAM,CAAC;CAClB"}

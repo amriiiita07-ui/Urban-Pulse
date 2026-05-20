@@ -1,0 +1,123 @@
+import { z } from "zod/v4";
+export declare const weatherSnapshotsTable: import("drizzle-orm/pg-core").PgTableWithColumns<{
+    name: "weather_snapshots";
+    schema: undefined;
+    columns: {
+        id: import("drizzle-orm/pg-core").PgColumn<{
+            name: "id";
+            tableName: "weather_snapshots";
+            dataType: "number";
+            columnType: "PgSerial";
+            data: number;
+            driverParam: number;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: true;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        zoneId: import("drizzle-orm/pg-core").PgColumn<{
+            name: "zone_id";
+            tableName: "weather_snapshots";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        temperature: import("drizzle-orm/pg-core").PgColumn<{
+            name: "temperature";
+            tableName: "weather_snapshots";
+            dataType: "string";
+            columnType: "PgNumeric";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        condition: import("drizzle-orm/pg-core").PgColumn<{
+            name: "condition";
+            tableName: "weather_snapshots";
+            dataType: "string";
+            columnType: "PgText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        humidity: import("drizzle-orm/pg-core").PgColumn<{
+            name: "humidity";
+            tableName: "weather_snapshots";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        recordedAt: import("drizzle-orm/pg-core").PgColumn<{
+            name: "recorded_at";
+            tableName: "weather_snapshots";
+            dataType: "date";
+            columnType: "PgTimestamp";
+            data: Date;
+            driverParam: string;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+    };
+    dialect: "pg";
+}>;
+export declare const insertWeatherSnapshotSchema: z.ZodObject<{
+    zoneId: z.ZodInt;
+    temperature: z.ZodString;
+    condition: z.ZodString;
+    humidity: z.ZodInt;
+    recordedAt: z.ZodOptional<z.ZodDate>;
+}, {
+    out: {};
+    in: {};
+}>;
+export type InsertWeatherSnapshot = z.infer<typeof insertWeatherSnapshotSchema>;
+export type WeatherSnapshot = typeof weatherSnapshotsTable.$inferSelect;
+//# sourceMappingURL=weather_snapshots.d.ts.map

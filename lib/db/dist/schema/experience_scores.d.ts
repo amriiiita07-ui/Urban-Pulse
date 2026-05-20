@@ -1,0 +1,123 @@
+import { z } from "zod/v4";
+export declare const experienceScoresTable: import("drizzle-orm/pg-core").PgTableWithColumns<{
+    name: "experience_scores";
+    schema: undefined;
+    columns: {
+        id: import("drizzle-orm/pg-core").PgColumn<{
+            name: "id";
+            tableName: "experience_scores";
+            dataType: "number";
+            columnType: "PgSerial";
+            data: number;
+            driverParam: number;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: true;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        citizenId: import("drizzle-orm/pg-core").PgColumn<{
+            name: "citizen_id";
+            tableName: "experience_scores";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        zoneId: import("drizzle-orm/pg-core").PgColumn<{
+            name: "zone_id";
+            tableName: "experience_scores";
+            dataType: "number";
+            columnType: "PgInteger";
+            data: number;
+            driverParam: string | number;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        score: import("drizzle-orm/pg-core").PgColumn<{
+            name: "score";
+            tableName: "experience_scores";
+            dataType: "string";
+            columnType: "PgNumeric";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        sentiment: import("drizzle-orm/pg-core").PgColumn<{
+            name: "sentiment";
+            tableName: "experience_scores";
+            dataType: "string";
+            columnType: "PgText";
+            data: string;
+            driverParam: string;
+            notNull: true;
+            hasDefault: false;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: [string, ...string[]];
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+        ratedAt: import("drizzle-orm/pg-core").PgColumn<{
+            name: "rated_at";
+            tableName: "experience_scores";
+            dataType: "date";
+            columnType: "PgTimestamp";
+            data: Date;
+            driverParam: string;
+            notNull: true;
+            hasDefault: true;
+            isPrimaryKey: false;
+            isAutoincrement: false;
+            hasRuntimeDefault: false;
+            enumValues: undefined;
+            baseColumn: never;
+            identity: undefined;
+            generated: undefined;
+        }, {}, {}>;
+    };
+    dialect: "pg";
+}>;
+export declare const insertExperienceScoreSchema: z.ZodObject<{
+    citizenId: z.ZodInt;
+    zoneId: z.ZodInt;
+    score: z.ZodString;
+    sentiment: z.ZodString;
+    ratedAt: z.ZodOptional<z.ZodDate>;
+}, {
+    out: {};
+    in: {};
+}>;
+export type InsertExperienceScore = z.infer<typeof insertExperienceScoreSchema>;
+export type ExperienceScore = typeof experienceScoresTable.$inferSelect;
+//# sourceMappingURL=experience_scores.d.ts.map
