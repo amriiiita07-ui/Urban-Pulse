@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm exec tsc --build && pnpm -r --if-present run build",
+  "buildCommand": "pnpm -r --if-present run build",
   "installCommand": "pnpm install",
   "framework": null
 }
