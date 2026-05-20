@@ -11,4 +11,6 @@ __pycache__/
 *.pyc
 .venv/
 dist/
+!lib/*/dist/
+!lib/*/dist/**
 build/
