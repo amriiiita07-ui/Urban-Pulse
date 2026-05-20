@@ -8,7 +8,7 @@ const router: IRouter = Router();
 router.get("/zones", async (req, res) => {
   try {
     const zones = await db.select().from(zonesTable);
-    res.json(zones.map(z => ({
+    res.json(zones.map((z: typeof zones[number]) => ({
       ...z,
       lat: Number(z.lat),
       lng: Number(z.lng),
