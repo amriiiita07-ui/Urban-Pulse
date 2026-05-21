@@ -1,5 +1,6 @@
 {
   "buildCommand": "pnpm -r --if-present run build",
   "installCommand": "pnpm install",
+  "outputDirectory": "artifacts/urbanpulse/dist/public",
   "framework": null
 }
