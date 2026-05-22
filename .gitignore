@@ -9,6 +9,8 @@ replit.nix
 node_modules/
 __pycache__/
 *.pyc
+
+
 .venv/
 dist/
 !lib/*/dist/
